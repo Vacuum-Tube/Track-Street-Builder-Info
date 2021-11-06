@@ -1,4 +1,4 @@
-# Track-Street-Builder-Info
+# Track/Street Builder Info
 
 This is the codebase for my Transport Fever 2 Mod:
 
