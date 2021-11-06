@@ -4,7 +4,7 @@ function data()
 		info = {
 			name = "Track/Street Builder Info",
 			description = _("mod_desc"),
-			minorVersion = 0,
+			minorVersion = 1,
 			severityAdd = "NONE",
 			severityRemove = "NONE",
 			tags = {"Script Mod"},

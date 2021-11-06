@@ -18,8 +18,9 @@ gi.calc = function(param)
 		if node<0 then --new
 			return newnodes[node].position
 		else -- existing
-			return api.engine.getComponent(node, api.type.ComponentType.BASE_NODE).position
 			--game.interface.getEntity(node).position
+			local c = api.engine.getComponent(node, api.type.ComponentType.BASE_NODE)  -- safe is safe...
+			return c.position
 		end
 	end
 	
@@ -28,6 +29,7 @@ gi.calc = function(param)
 	local connecnode1, connecnode2  -- 2 tries of detecting the "node-chain"
 	local firstseg, lastseg
 	local outoforder = {}
+	local noentn = 0
 	local lists = {
 		leng = list.newList(),
 		speedLimitSeg = list.newList(),
@@ -87,20 +89,27 @@ gi.calc = function(param)
 			
 			local tn = entity2tn[segent]
 			--print(segent, tn, "edges:"..#tn.edges, "nodes:"..#tn.nodes)
-			list.newVal(lists.leng, tn.edges[1].geometry.length)
 			
-			local speedLimit = list.newList()
-			local curveSpeedLimit = list.newList()
-			local curSpeed = list.newList()
-			for i,edge in pairs(tn.edges) do  -- streets: >1 "edge" in 1 segment
-				list.newVal(speedLimit, edge.speedLimit)
-				list.newVal(curveSpeedLimit, edge.curveSpeedLimit)
-				list.newVal(curSpeed, edge.curSpeed)
-				ne = ne + 1
+			if tn then
+				list.newVal(lists.leng, tn.edges[1].geometry.length)
+				
+				local speedLimit = list.newList()
+				local curveSpeedLimit = list.newList()
+				local curSpeed = list.newList()
+				for i,edge in pairs(tn.edges) do  -- streets: >1 "edge" in 1 segment
+					list.newVal(speedLimit, edge.speedLimit)
+					list.newVal(curveSpeedLimit, edge.curveSpeedLimit)
+					list.newVal(curSpeed, edge.curSpeed)
+					ne = ne + 1
+				end
+				list.newVal(lists.speedLimitSeg, speedLimit.max)  -- max because sidewalks have 0
+				list.newVal(lists.curveSpeedLimitSeg, curveSpeedLimit.max)
+				list.newVal(lists.curSpeedSeg, curSpeed.max)
+				
+			else
+				-- print("No entity2tn!",segent)
+				noentn = noentn+1
 			end
-			list.newVal(lists.speedLimitSeg, speedLimit.max)  -- max because sidewalks have 0
-			list.newVal(lists.curveSpeedLimitSeg, curveSpeedLimit.max)
-			list.newVal(lists.curSpeedSeg, curSpeed.max)
 		end
 	end
 	
@@ -135,7 +144,7 @@ gi.calc = function(param)
 			outoforder = notord
 			counter = counter + 1
 			if counter>maxcount and #outoforder>0 then 
-				print("Break while")
+				--print("Break while")
 				break
 			end
 		end
@@ -144,11 +153,10 @@ gi.calc = function(param)
 			--print("Segments ordered!", "counter",counter)
 		else
 			--debugPrint(param)
-			debugPrint(newsegs)
+			--debugPrint(newsegs)
 			print("Track Info","Segments could NOT be ORDERED","#seg",ns, "counter",counter)
 			debugPrint(notord)
-			print("firstseg: "..firstseg,"lastseg: "..lastseg)
-			print(connecnode1,connecnode2)
+			print("firstseg: "..firstseg,"lastseg: "..lastseg,"c1: "..connecnode1,"c2: "..connecnode2)
 		end
 	end
 	
@@ -176,11 +184,12 @@ gi.calc = function(param)
 			max = math.max(lists.angle.max, -lists.angle.min),
 		},
 		notord = #notord,
+		noentn = noentn,
 	}
 end
 
 gi.getVecZTangent = function(v)
-	return v.z / math.sqrt(v.x^2 + v.y^2 + v.z^2)
+	return v.z / math.sqrt(v.x^2 + v.y^2 ) --+ v.z^2)
 end
 
 gi.calcRadiusAndAngle = function(c)

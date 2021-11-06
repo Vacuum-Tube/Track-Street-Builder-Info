@@ -1,0 +1,7 @@
+1.1  2021-11-06
+-Fix tooltip not disappearing
+-Minor improvements
+-Make compatible with other mods using toolTipContainer
+
+1.0  2020-11-25
+Release
