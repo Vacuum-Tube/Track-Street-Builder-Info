@@ -39,6 +39,7 @@ gi.calc = function(param)
 		angle = list.newList(),
 		slope = list.newList(),
 	}
+	local trackType, streetType
 	
 	for i,seg in pairs(prop.addedSegments) do
 		local segent = seg.entity
@@ -110,6 +111,9 @@ gi.calc = function(param)
 				-- print("No entity2tn!",segent)
 				noentn = noentn+1
 			end
+			
+			trackType = seg.trackEdge.trackType
+			streetType = seg.streetEdge.streetType
 		end
 	end
 	
@@ -183,6 +187,8 @@ gi.calc = function(param)
 			sum = math.abs(lists.angle.sum),
 			max = math.max(lists.angle.max, -lists.angle.min),
 		},
+		trackType = trackType,
+		streetType = streetType,
 		notord = #notord,
 		noentn = noentn,
 	}

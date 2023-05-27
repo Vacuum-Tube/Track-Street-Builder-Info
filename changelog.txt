@@ -1,3 +1,8 @@
+1.2  2023-05-27
+-Fix tooltip not disappearing after game update
+-add digits
+-add street/track type
+
 1.1  2021-11-06
 -Fix tooltip not disappearing
 -Minor improvements

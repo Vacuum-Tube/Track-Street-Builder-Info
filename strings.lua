@@ -14,9 +14,10 @@ Displays detailed information for track and street construction:
 With this, construction and planning can be done much more precisely.
 When hovering on the field, labels and further data is displayed.
 
-The field is always set to the current mouse position (and remains there after releasing).
-Pro tip: Press shift, this will update the construction proposal and reposition the field.
+Mod with more info about street/track segments: [u][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2645936377]Info Tool[/url][/u]
 
+
+Code on [url=https://github.com/Vacuum-Tube/Track-Street-Builder-Info ]GitHub[/url]
 
 [h3]If you like to support my mod development, you can donate here:[/h3]
 [url=https://paypal.me/VacuumTubeTPF ][img]https://raw.githubusercontent.com/Vacuum-Tube/Advanced_Statistics_1/main/pictures/paypal.png [/img][/url]   [b]Thank you![/b]
@@ -35,11 +36,12 @@ Zeigt beim Gleis- und Straßenbau umfassende Informationen an:
 [/list]
 
 Somit kann man deutlich präziser Bauen und Planen.
-Beim zeigen auf das Feld werden die Bezeichnungen und genauere Daten angezeigt.
+Beim Zeigen auf das Feld werden die Bezeichnungen und genauere Daten angezeigt.
 
-Das Feld wird immer an die aktuelle Mausposition gesetzt (und bleibt dort nach dem Absetzen).
-Pro-Tipp: Mit shift wird der Bauvorschlag aktualisiert und damit das Feld neu positioniert.
+Mod mit mehr Infos zu Straßen-/Gleis-Segmenten: [u][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2645936377]Info Tool[/url][/u]
 
+
+Code on [url=https://github.com/Vacuum-Tube/Track-Street-Builder-Info ]GitHub[/url]
 
 [h3]Wenn Du meine Mod Entwicklung unterstützen möchtest, würde ich mich über eine Spende freuen:[/h3]
 [url=https://paypal.me/VacuumTubeTPF ][img]https://raw.githubusercontent.com/Vacuum-Tube/Advanced_Statistics_1/main/pictures/paypal.png [/img][/url]   [b]Danke![/b]

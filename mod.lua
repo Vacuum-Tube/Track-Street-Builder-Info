@@ -1,10 +1,9 @@
-
 function data()
 	return {
 		info = {
 			name = "Track/Street Builder Info",
 			description = _("mod_desc"),
-			minorVersion = 1,
+			minorVersion = 2,
 			severityAdd = "NONE",
 			severityRemove = "NONE",
 			tags = {"Script Mod"},
@@ -15,6 +14,7 @@ function data()
 					tfnetId = 29264,
 				},
 			},
+			url = "https://www.transportfever.net/filebase/entry/5766-track-street-builder-info/",
 		},
 		runFn = function (settings)
 			

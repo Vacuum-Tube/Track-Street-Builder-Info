@@ -5,58 +5,13 @@ local state = {
 	slope = 0
 }
 
-
-local function init()  -- called once at startup (only new game!)
-	print("------------INIT------------")
-end
-
-local function update()  -- called every 0.2 seconds (Game Time)
-	--print("update", getGameTimeStr() )
-	--print("update", getRealTimeStr() )
-	
-end
-
-local function handleEvent(src, id, name, param, ...)
-	if src=="guidesystem.lua" then return end
-	print("handleEvent:", src, id, name, param, ... )
-	--debugPrint(param)
-end
-
-local function save()  -- called as often as update
-	print("save")
-	--return state
-end
-
-
-
-local function load(loadedState)
-	print("load")
-	debugPrint(loadedState)
-end
-
-local function guiInit()  -- called once at startup
-	--print("------------GUI INIT------------")
-end
-
-local function guiUpdate()  -- called every GUI frame
-	--print("guiUpdate", getRealTimeStr() )
-	
-end
-
-local function guiHandleEvent(id, name, param, ...)
-	--if name=="visibilityChange" then return end 
-	--if name=="destroy" then return end 
-	--if name=="idAdded" then return end 
-	--print("guiHandleEvent:", id, name, param, ... )
-	--debugPrint(param)
-	
+local function guiHandleEvent(id, name, param)
 	if id=="trackBuilder" or id=="streetBuilder" then  -- or id=="streetTrackModifier" -- or id=="streetTerminalBuilder" 
 		if name=="builder.proposalCreate" then
 			if param.data.errorState.critical or #param.proposal.proposal.addedSegments==0 then 
 				toolTipCont.destroy()
 				return
 			end
-			--local status, ret = pcall( GeomInfo.calc, param )
 			local status, err = pcall( function() 
 				local sttime = os.clock()
 				local ginf = GeomInfo.calc(param)
@@ -100,14 +55,15 @@ local function guiHandleEvent(id, name, param, ...)
 					ginf.noentn>0 and string.format("noentn: %d", ginf.noentn ) or nil,
 				}
 				local tttooltab = {
-					string.format("Length: %.1f m", ginf.leng),
-					string.format("Height: %.1f m → %.1f m" , ginf.heightstart, ginf.heightend ),
+					string.format("Length: %.2f m", ginf.leng),
+					string.format("Height: %.2f m → %.2f m" , ginf.heightstart, ginf.heightend ),
 					--string.format("Building Slope: %.0f‰", state.slope*1000),
 					string.format("Slope: %.1f‰ → %.1f‰ (max: %.1f‰)", ginf.slopestart*1000, ginf.slopeend*1000, ginf.slopemax*1000),
-					string.format("Speed Limit: %.0f km/h (Curve: %.0f km/h)", ginf.speedLimit*3.6, ginf.curveSpeedLimit*3.6),
+					string.format("Speed Limit: %.0f km/h (Curve: %.1f km/h)", ginf.speedLimit*3.6, ginf.curveSpeedLimit*3.6),
 					--string.format("curSpeed: %.0f km/h", ginf.curSpeed*3.6),  -- what even is this?
 					string.format("Radius: %.0f - %.0f m, Angle: %.1f° (max: %.1f°)", ginf.radius.min, ginf.radius.max , math.deg(ginf.angle.sum), math.deg(ginf.angle.max) ),
 					"Segments: "..ginf.ns.." - Edges: "..ginf.ne,
+					ginf.trackType>=0 and _("Track Type")..": "..api.res.trackTypeRep.getName(ginf.trackType) or _("Street Type")..": "..api.res.streetTypeRep.getName(ginf.streetType),
 					string.format("Calc Time: %.3f s", os.clock()-sttime),
 					ginf.notord>0 and string.format("Not ordered: %d", ginf.notord ) or nil,
 				}
@@ -131,14 +87,14 @@ local function guiHandleEvent(id, name, param, ...)
 				print("===== Track/Street Builder Info - Error Handler:")
 				debugPrint(param)
 				print(err)
-				print("===== Track/Street Builder Info - Please submit this message to the mod author")
+				print("===== Track/Street Builder Info - Please submit this message to the mod author - https://www.transportfever.net/filebase/index.php?entry/5766-track-street-builder-info/")
 				toolTipCont.createText("Error - see console or stdout",err,{x=30,y=15})
 			end
 		elseif name=="builder.slope" then
 			--print("Slope",param)
 			state.slope = param  -- sending the wrong param when switching off slope...
-		-- elseif name=="builder.apply" then
-			-- print("APPLY")
+		elseif name=="builder.apply" then
+			toolTipCont.destroy()
 		-- else
 			-- print(id,name,param)
 			-- toolTipCont.createText(name,tostring(param))
@@ -146,13 +102,16 @@ local function guiHandleEvent(id, name, param, ...)
 	elseif (id=="menu.construction.railmenu" and name=="visibilityChange" and param==false) or
 			(id=="menu.construction.roadmenu" and name=="visibilityChange" and param==false) or
 			(id=="menu.construction.rail.tabs" and name=="tabWidget.currentChanged") or
-			(id=="menu.construction.road.tabs" and name=="tabWidget.currentChanged") then
-		--print("Destroy tooltip")
+			(id=="menu.construction.road.tabs" and name=="tabWidget.currentChanged") or
+			(id=="mainView" and name=="camera.userPan") or
+			(id=="mainView" and name=="camera.keyScroll") or
+			(id=="mainView" and name=="camera.userZoom") or
+			(id=="bwc.tooltip" and name=="destroy")
+	then
 		toolTipCont.destroy()
 		state.slope = 0
 	end
 end
-
 
 function data()
 	return {
