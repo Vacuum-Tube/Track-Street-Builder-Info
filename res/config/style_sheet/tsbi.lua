@@ -1,5 +1,8 @@
 local ssu = require "stylesheetutil"
 
+local hp = 5
+local vp = 2
+
 function data()
     local result = {}
     local a = ssu.makeAdder(result)
@@ -7,14 +10,17 @@ function data()
 	a("#tsbi.toolTipContainer.toolTip", {
 		backgroundColor = ssu.makeColor(15, 35, 50, 100),
 		-- margin = ,
-		gravity = { .0, .0 },
+		gravity = { 0, 0 },
 		blurRadius = 16,
 	})
 	
-	-- a("#tsbi.toolTipContainer.toolTip TextView", {
+	a("#tsbi.toolTipContainer.toolTip.uglabel", {
 		-- backgroundColor = ssu.makeColor(50, 125, 200, 200),
-		-- fontSize = 18,
-	-- })
+		backgroundColor = ssu.makeColor(50, 50, 50, 200),
+		fontSize = 18,
+		padding = { vp, hp, vp, hp },
+		gravity = { -1, 0 },
+	})
 	
     return result
 end

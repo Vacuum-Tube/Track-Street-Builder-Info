@@ -2,16 +2,17 @@ function data()
 return {
 	en = {
 		mod_desc = [[
-Displays detailed information for track and street construction:
+Displays detailed information about tracks and streets during construction.
+With this, construction and planning can be done much more precisely.
 [list]
 [*]Length
-[*]Terrain height
+[*]Terrain Height
 [*]Slope
 [*]Speed
-[*]Curve radius
+[*]Curve Radius
+[*]Angle
 [/list]
 
-With this, construction and planning can be done much more precisely.
 When hovering on the field, labels and further data is displayed.
 
 Mod with more info about street/track segments: [u][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2645936377]Info Tool[/url][/u]
@@ -26,16 +27,17 @@ Code on [url=https://github.com/Vacuum-Tube/Track-Street-Builder-Info ]GitHub[/u
 	},
 	de = {
 		mod_desc = [[
-Zeigt beim Gleis- und Straßenbau umfassende Informationen an:
+Zeigt beim Gleis- und Straßenbau umfassende Informationen an.
+Somit kann man deutlich präziser Bauen und Planen.
 [list]
 [*]Länge
 [*]Geländehöhe
 [*]Steigung
 [*]Geschwindigkeit
 [*]Kurvenradius
+[*]Winkel
 [/list]
 
-Somit kann man deutlich präziser Bauen und Planen.
 Beim Zeigen auf das Feld werden die Bezeichnungen und genauere Daten angezeigt.
 
 Mod mit mehr Infos zu Straßen-/Gleis-Segmenten: [u][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2645936377]Info Tool[/url][/u]

@@ -8,11 +8,17 @@ end
 
 tt.id = "tsbi.toolTipContainer.toolTip"
 
-function tt.createText(text,tooltip,pos_offset)
+function tt.createText(text,tooltip,pos_offset,text2)
 	tt.destroy()
 	
-	local textView = api.gui.comp.TextView.new(text)
 	local layout = api.gui.layout.BoxLayout.new("VERTICAL")
+	if text2 then
+		local textView2 = api.gui.comp.TextView.new(text2)
+		-- textView2:setName("BuildControlComp::CostsLabel")
+		textView2:setId("tsbi.toolTipContainer.toolTip.uglabel")
+		layout:addItem(textView2)
+	end
+	local textView = api.gui.comp.TextView.new(text)
 	layout:addItem(textView)
 	
 	local toolTipComp = api.gui.comp.Component.new("ToolTip")
@@ -31,6 +37,21 @@ function tt.createText(text,tooltip,pos_offset)
 		mousePosition[2]+pos_offset.y,
 		0,0
 	))
+end
+
+function tt.getSize()
+	local comp = api.gui.util.getById(tt.id)
+	if comp then
+		return comp:getContentRect()
+	end
+end
+
+function tt.updatePos(x,y)
+	local comp = api.gui.util.getById(tt.id)
+	if comp then
+		local layout = comp:getParent():getLayout()
+		layout:setItemPosition(layout:getIndex(comp), x, y)
+	end
 end
 
 function tt.destroy(fromCallback)

@@ -47,13 +47,34 @@ function u.setmin(List,val)
 end
 
 
-function u.newCountList(list)
-	local clist = {}
-	for i,val in pairs(list) do
-		clist[val] = 0
-	end
-	return clist
-end
+u.mtList = {
+	__add = function(sum,val)
+		-- if type(val)=="table" then
+			u.tableadd(sum,val)  -- WARNING tableadd writes sum
+		-- else
+			-- return List.sum + val
+		-- end
+	end,
+	__div = function(sum,val)
+		local div = {}
+		for i,s in pairs(sum) do
+			div[i] = s/val
+		end
+		return div
+	end,
+}
 
+local ValueList = {}
+u.ValueList = ValueList
+ValueList.__index = ValueList
+function ValueList:new()
+	--self.__index = self
+	local o = u.newList()
+	setmetatable(o, self)
+	return o
+end
+function ValueList:newVal(val)
+	u.newVal(self, val)
+end
 
 return u
