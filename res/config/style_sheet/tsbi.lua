@@ -22,5 +22,10 @@ function data()
 		gravity = { -1, 0 },
 	})
 	
+	
+	a("!BuildControlComp-CostsLabel-hide", {
+		backgroundColor = ssu.makeColor(0, 0, 0, 0)   -- hide vanilla info
+	})
+	
     return result
 end

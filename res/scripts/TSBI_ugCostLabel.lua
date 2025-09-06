@@ -83,8 +83,10 @@ function u.hide(bool, guiid)
 	local c = u.getComp(guiid)
 	if c then 
 		if bool then 
-			c:setMaximumSize(api.gui.util.Size.new(0,0))
+			c:addStyleClass("BuildControlComp-CostsLabel-hide")
+			c:setMaximumSize(api.gui.util.Size.new(0,25))  -- If height is too small, the slope indicator overlaps with build control
 		else
+			c:removeStyleClass("BuildControlComp-CostsLabel-hide")
 			c:setMaximumSize(api.gui.util.Size.new(400,400))
 		end
 	end 

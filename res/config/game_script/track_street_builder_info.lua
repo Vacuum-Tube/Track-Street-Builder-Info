@@ -118,6 +118,9 @@ local function guiHandleEvent(id, name, param)
 					end)
 				end
 				local ug_text = ugCostLabel.getText(id) or "ERROR - No UG label"
+				if id=="constructionBuilder" and param.data.costs==0 then
+					ug_text = nil
+				end
 				toolTipCont.createText(tttext, tttoolt, {x=30,y=30}, ug_text)
 				ugCostLabel.hide(true, id)
 				active_guiid = id
